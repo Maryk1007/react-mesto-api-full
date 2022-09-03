@@ -1,0 +1,11 @@
+.header__menu-top {
+  flex-direction: column-reverse;
+  position: relative;
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .header__menu-top {
+    display: none;
+  }
+}

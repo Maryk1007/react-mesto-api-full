@@ -1,0 +1,10 @@
+.burger-menu {
+  display: block;
+  margin-right: 30px;
+}
+
+@media (min-width: 768px) {
+  .burger-menu {
+    display: none;
+  }
+}
