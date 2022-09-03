@@ -1,0 +1,9 @@
+.images {
+  margin-bottom: 28px;
+}
+
+@media (min-width: 1280px) {
+  .images {
+    margin-bottom: 50px;
+  }
+}
