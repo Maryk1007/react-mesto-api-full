@@ -1,0 +1,10 @@
+.header__menu {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .header__menu {
+    display: flex;
+    margin-bottom: 18px;
+  }
+}

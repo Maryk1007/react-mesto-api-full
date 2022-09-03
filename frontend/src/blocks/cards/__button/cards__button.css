@@ -1,0 +1,20 @@
+.cards__button {
+  margin: 0;
+  padding: 0;
+  align-self: center;
+  top: 29px;
+  right: 20px;
+  width: 22px;
+  height: 19px;
+  border: none;
+  background-color: transparent;
+  background-image: url(../../../images/button-like.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  transition: opacity .3s ease-in;
+}
+
+.cards__button:hover {
+  opacity: .5;
+}
