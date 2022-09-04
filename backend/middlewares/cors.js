@@ -1,8 +1,10 @@
 const allowedCors = [
-  'http://mesto.maryk.nomoredomains.sbs',
-  'https://mesto.maryk.nomoredomains.sbs',
+  'http://maryk.mesto.nomoredomains.sbs',
+  'https://maryk.mesto.nomoredomains.sbs',
   'http://localhost:3000',
   'https://localhost:3000',
+  'http://localhost:3001',
+  'https://localhost:3001',
 ];
 
 module.exports = (req, res, next) => {
