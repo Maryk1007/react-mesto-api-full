@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require('express');
 const { errors } = require('celebrate');
-const cors = require('./middlewares/cors');
+// const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const error = require('./middlewares/error');
 const router = require('./routes/routes');
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
 
 // обработка кросс-доменных запросов
-app.use(cors);
+// app.use(cors);
 
 // краш-тест сервера
 app.get('/crash-test', () => {
