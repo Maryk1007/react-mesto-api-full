@@ -14,11 +14,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// обработка кросс-доменных запросов
-app.use(cors);
-
 // логгер запросов
 app.use(requestLogger);
+
+// обработка кросс-доменных запросов
+app.use(cors);
 
 // краш-тест сервера
 app.get('/crash-test', () => {
