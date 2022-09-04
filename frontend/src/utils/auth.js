@@ -1,4 +1,4 @@
-export const BASE_URL = 'api.mesto.maryk.nomoredomains.sbs.nomoredomains.sbs';
+export const BASE_URL = 'api.maryk.mesto.nomoredomains.sbs';
 
 const checkResponse = (res) => {
   if(res.ok) {

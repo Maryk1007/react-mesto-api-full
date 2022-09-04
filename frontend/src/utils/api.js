@@ -89,7 +89,7 @@ class Api {
   }
 
   export const api = new Api({
-    baseUrl: 'api.mesto.maryk.nomoredomains.sbs.nomoredomains.sbs',
+    baseUrl: 'api.maryk.mesto.nomoredomains.sbs',
     headers: {
       'Content-Type': 'application/json'
     }
