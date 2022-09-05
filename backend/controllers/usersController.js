@@ -72,8 +72,8 @@ module.exports.getMe = (req, res, next) => {
   const { _id } = req.user;
   User.findById(_id)
     .then((user) => {
-      if (!user) {
-        throw new NotFoundError('Пользователь по указанному id не найден');
+      if (user === null) {
+        throw new NotFoundError(`Пользователь по указанному _id (${_id}) не найден`);
       } else {
         res.send(user);
       }
@@ -92,8 +92,8 @@ module.exports.getUserById = (req, res, next) => {
   const { userId } = req.params;
   User.findById(userId)
     .then((user) => {
-      if (!user) {
-        throw new NotFoundError('Пользователь по указанному id не найден');
+      if (user === null) {
+        throw new NotFoundError(`Пользователь по указанному _id (${userId}) не найден`);
       } else {
         res.send(user);
       }
@@ -113,8 +113,8 @@ module.exports.updateUser = (req, res, next) => {
   const userId = req.user._id;
   User.findOneAndUpdate({ _id: userId }, { name, about }, { new: true, runValidators: true })
     .then((user) => {
-      if (!user) {
-        throw new NotFoundError(`Пользователь по указанному _id не найден`);
+      if (user === null) {
+        throw new NotFoundError(`Пользователь по указанному _id (${userId}) не найден`);
       } else {
         res.send(user);
       }
@@ -136,8 +136,8 @@ module.exports.updateAvatar = (req, res, next) => {
   const userId = req.user._id;
   User.findByIdAndUpdate(userId, { avatar }, { new: true })
     .then((user) => {
-      if (!user) {
-        throw new NotFoundError(`Пользователь по указанному _id не найден`);
+      if (user === null) {
+        throw new NotFoundError(`Пользователь по указанному _id (${userId}) не найден`);
       } else {
         res.send(user);
       }
