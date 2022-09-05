@@ -11,30 +11,23 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 // добавить пользователя
 module.exports.createUser = (req, res, next) => {
   const {
-    email,
-    password,
     name,
     about,
     avatar,
+    email,
+    password,
   } = req.body;
-  return bcrypt
-    .hash(password, SALT_ROUNDS)
-    .then((hash) => (
-      User
-        .create({
-          email,
-          password: hash,
-          name,
-          about,
-          avatar,
-        })
-    ))
+  bcrypt.hash(password, SALT_ROUNDS)
+    .then((hash) => User.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hash,
+    }))
     .then((user) => {
       res.send({
-        email: user.email,
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
+        name: user.name, about: user.about, avatar: user.avatar, email: user.email, _id: user._id,
       });
     })
     .catch((err) => {
@@ -51,8 +44,7 @@ module.exports.createUser = (req, res, next) => {
 // аутентификация
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  return User
-    .findUserByCredentials(email, password)
+  User.findUserByCredentials({ email, password })
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
@@ -61,29 +53,30 @@ module.exports.login = (req, res, next) => {
       );
       res.send({ token });
     })
-    .catch(next);
+    .catch((err) => {
+      next(err);
+    });
 };
 
 // получить всех пользователей
 module.exports.getUsers = (req, res, next) => {
-  User
-    .find({})
+  User.find({})
     .then((users) => {
-      res.send(users);
+      res.send({ data: users });
     })
     .catch(next);
 };
 
-// получить информацию о текущем пользователе
+// получить текущего пользователя
 module.exports.getMe = (req, res, next) => {
-  const userId = req.user._id;
-  User
-    .findById(userId)
+  const { _id } = req.user;
+  User.findById(_id)
     .then((user) => {
-      if (!user) {
-        throw new NotFoundError('Пользователь по указанному id не найден');
+      if (user === null) {
+        throw new NotFoundError(`Пользователь по указанному _id (${_id}) не найден`);
+      } else {
+        res.send(user);
       }
-      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -97,13 +90,13 @@ module.exports.getMe = (req, res, next) => {
 // получить пользователя по ID
 module.exports.getUserById = (req, res, next) => {
   const { userId } = req.params;
-  User
-    .findById(userId)
+  User.findById(userId)
     .then((user) => {
-      if (!user) {
-        throw new NotFoundError('Пользователь по указанному id не найден');
+      if (user === null) {
+        throw new NotFoundError(`Пользователь по указанному _id (${userId}) не найден`);
+      } else {
+        res.send(user);
       }
-      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -114,27 +107,21 @@ module.exports.getUserById = (req, res, next) => {
     });
 };
 
-// обновить данные пользователя 
+// обновить данные пользователя
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
   const userId = req.user._id;
-  User
-    .findByIdAndUpdate(
-      userId,
-      { name, about },
-      { new: true, runValidators: true },
-    )
-    .orFail(() => {
-      const err = new Error('Пользователь по указанному id не найден');
-      err.name = 'NotFoundError';
-      throw err;
-    })
+  User.findOneAndUpdate({ _id: userId }, { name, about }, { new: true, runValidators: true })
     .then((user) => {
-      res.send(user);
+      if (user === null) {
+        throw new NotFoundError(`Пользователь по указанному _id (${userId}) не найден`);
+      } else {
+        res.send(user);
+      }
     })
     .catch((err) => {
-      if (err.name === 'NotFoundError') {
-        next(new NotFoundError('Пользователь по указанному id не найден'));
+      if (err.message === 'NotFoundError') {
+        res.status(NotFoundError).send({ message: 'Запрашиваемый пользователь не найден' });
       } else if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new CastError('Введены некорректные данные пользователя'));
       } else {
@@ -143,27 +130,21 @@ module.exports.updateUser = (req, res, next) => {
     });
 };
 
-// обновить аватар пользователя 
+// обновить аватар пользователя
 module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   const userId = req.user._id;
-  User
-    .findByIdAndUpdate(
-      userId,
-      { avatar },
-      { new: true, runValidators: true },
-    )
-    .orFail(() => {
-      const err = new Error('Пользователь по указанному id не найден');
-      err.name = 'NotFoundError';
-      throw err;
-    })
+  User.findByIdAndUpdate(userId, { avatar }, { new: true })
     .then((user) => {
-      res.send(user);
+      if (user === null) {
+        throw new NotFoundError(`Пользователь по указанному _id (${userId}) не найден`);
+      } else {
+        res.send(user);
+      }
     })
     .catch((err) => {
-      if (err.name === 'NotFoundError') {
-        next(new NotFoundError('Пользователь по указанному id не найден'));
+      if (err.message === 'NotFoundError') {
+        res.status(NotFoundError).send({ message: 'Запрашиваемый пользователь не найден' });
       } else if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new CastError('Введены некорректные данные пользователя'));
       } else {
