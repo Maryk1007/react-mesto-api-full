@@ -1,6 +1,6 @@
 const allowedCors = [
-  'http://mesto.maryk.nomoredomains.sbs',
   'https://mesto.maryk.nomoredomains.sbs',
+  'http://mesto.maryk.nomoredomains.sbs',
   'http://localhost:3000',
   'https://localhost:3000',
 ];
@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
     res.header('Access-Control-Allow-Headers', requestHeaders);
-    return res.status(200).send();
+    return res.send();
   }
   next();
 };
