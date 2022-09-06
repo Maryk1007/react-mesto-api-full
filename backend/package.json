@@ -1,7 +1,7 @@
 {
   "name": "express-mesto-gha",
   "version": "1.0.0",
-  "description": "Проект Mesto бэкенд",
+  "description": "Проект Mesto бэкенд+фронтэнд",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Maryk1007/express-mesto-gha.git"
+    "url": "git+https://github.com/Maryk1007/react-mesto-api-full.git"
   },
   "author": "Maria Lapshova",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Maryk1007/express-mesto-gha/issues"
+    "url": "https://github.com/Maryk1007/react-mesto-api-full/issues"
   },
-  "homepage": "https://github.com/Maryk1007/express-mesto-gha#readme",
+  "homepage": "https://github.com/Maryk1007/react-mesto-api-full#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "celebrate": "^15.0.1",
