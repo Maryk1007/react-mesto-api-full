@@ -1,0 +1,14 @@
+.header__menu-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .header__menu-list {
+    flex-direction: row;
+  }
+}

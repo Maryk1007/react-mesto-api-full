@@ -1,0 +1,14 @@
+.profile__avatar {
+  position: relative;
+  margin-right: 22px;
+}
+
+.profile__avatar:hover .profile__edit-avatar {
+  display: block;
+  z-index: 5;
+}
+
+.profile__avatar:hover .profile__picture {
+  opacity: .2;
+  z-index: 0;
+}
