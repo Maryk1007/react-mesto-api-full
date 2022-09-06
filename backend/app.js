@@ -1,8 +1,8 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require('express');
+const cors = require('cors');
 const { errors } = require('celebrate');
-const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const error = require('./middlewares/error');
 const router = require('./routes/routes');
@@ -10,12 +10,10 @@ const router = require('./routes/routes');
 const { PORT = 3000 } = process.env;
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// обработка кросс-доменных запросов
-app.use(cors);
 
 // логгер запросов
 app.use(requestLogger);
