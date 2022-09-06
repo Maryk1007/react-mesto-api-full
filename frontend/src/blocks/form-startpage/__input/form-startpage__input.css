@@ -1,0 +1,26 @@
+.form-startpage__input {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 30px;
+  padding-bottom: 12px;
+  background-color: transparent;
+  border: none;
+  font-family: "Inter", "Arial", sans-serif;
+  color: #FFF;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  width: 238px;
+  border-bottom: 2px solid #ccc;
+}
+
+.form-startpage__input::placeholder {
+  color: #ccc;
+}
+
+@media (min-width: 768px) {
+  .form-startpage__input {
+    width: 358px;
+  }
+}
+
